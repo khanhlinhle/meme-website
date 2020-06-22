@@ -63,33 +63,37 @@ router.post("/addtext/:id", async (req, res) => {
 
     const filePath = `images/originals/${req.params.id}`;
     const image = await Jimp.read(`public/${filePath}`); // get original image
-    const font = await Jimp.loadFont(Jimp.FONT_SANS_32_BLACK); // set the font
+    const font = await Jimp.loadFont(Jimp.FONT_SANS_128_WHITE); // set the font
 
-    console.log("69  ", req.body.top);
-    console.log("70  ",req.body.bottom);
+    image.resize(800,800);
 
     if (req.body.top) {
       image.print(
         font,
-        10,
-        10,
-        req.body.top
+        0,
+        0,
+        {
+          text: req.body.top,
+          alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
+          alignmentY: Jimp.VERTICAL_ALIGN_TOP,
+        },
+        750,
+        600
       );
     }
 
     if (req.body.bottom) {
       image.print(
         font,
-        10,
-        10,
-        req.body.bottom
-        // {
-        //   text: req.body.bottom,
-        //   alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
-        //   alignmentY: Jimp.VERTICAL_ALIGN_BOTTOM,
-        // },
-        // dimension.width,
-        // dimension.height
+        0,
+        0,
+        {
+          text: req.body.bottom,
+          alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
+          alignmentY: Jimp.VERTICAL_ALIGN_BOTTOM,
+        },
+        750,
+        800
       );
     }
 
